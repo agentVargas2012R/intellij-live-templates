@@ -1,0 +1,10 @@
+errorResponseModel:
+    type: object
+    properties:
+        type: array
+        items:
+            properties:
+                errorCode:
+                    type: string
+                errorDescription:
+                    type: string

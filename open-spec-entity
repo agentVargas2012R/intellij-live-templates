@@ -1,0 +1,9 @@
+$entityName$:
+    type: object
+    properties:
+        $entityName$Id:
+            type: string
+            description: $entityName$ Id
+
+
+

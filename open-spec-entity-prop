@@ -1,0 +1,8 @@
+$prop$:
+    type: $type$
+    description: $description$
+
+
+productName:
+    type: string
+    description: This is the name for the product.

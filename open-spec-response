@@ -1,0 +1,10 @@
+responses:
+    $entityName$Response:
+        description: The response of $entityName$
+        content:
+            application/json
+                schema:
+                    type: object
+                    allOff:
+                        - $ref '#/components/schemas/$name$'
+

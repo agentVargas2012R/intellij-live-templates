@@ -1,0 +1,2 @@
+$entityProperty$
+    $ref: '#/components/$entityName$'

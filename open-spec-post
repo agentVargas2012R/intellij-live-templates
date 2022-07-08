@@ -1,0 +1,27 @@
+"/$method$":
+    post:
+        tags:
+            - $tags$
+        description: "Retreives all information for $entityName$."
+        requestBody:
+            description: "Saves a $entityName$."
+            content:
+                application/json
+                    schema:
+                        $ref: '#/components/schemas/$entityName$Request'
+        responses:
+            200:
+                $ref: '#/components/responses/$entityName$'
+            default:
+                description: Unexpected Error/Input validation error
+                content:
+                    application/json
+                        schema:
+                            $ref: '#/components/errorResponseModel'
+                    x-amazon-integration:
+                        uri:
+                            Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda/path/2015-03-31/functions/${$lambdaName$.Arn}:live/invocations
+                        passthroughBehavior: when_no_match
+                        httpMethod: POST
+                        type: aws_proxy
+
