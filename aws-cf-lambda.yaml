@@ -1,10 +1,10 @@
 $name$Func:
   Type: AWS::Serverless::Function
   Properties:
-    FunctionName: $name$-lambda
+    FunctionName: !Sub "${prefix}-$eventName$-lambda"
     CodeUri: lambda-handler/dist/
     Handler: lambda-handler.handler
-    Runtime: nodejs12.x
+    Runtime: $runner$
     AutoPublishAlias: live
     Timeout: $timeout$
     MemorySize: $memorySize$
@@ -17,6 +17,6 @@ $name$Func:
       $eventName$:
         Type: Api
         Properties:
-          Path: /$eventMethod$
+          Path: /$eventName$
           Method: $method$
           RestApiId: !Ref $name$Api
