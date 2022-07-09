@@ -1,0 +1,22 @@
+$name$Func:
+  Type: AWS::Serverless::Function
+  Properties:
+    FunctionName: $name$-lambda
+    CodeUri: lambda-handler/dist/
+    Handler: lambda-handler.handler
+    Runtime: nodejs12.x
+    AutoPublishAlias: live
+    Timeout: $timeout$
+    MemorySize: $memorySize$
+    ReservedConcurrentExecutions: $concurrentExec$
+    Role: !GetAtt $name$FuncRole
+    Environment:
+      Variables:
+        deployEnv: !Ref ${deployEnv}
+    Events:
+      $eventName$:
+        Type: Api
+        Properties:
+          Path: /$eventMethod$
+          Method: $method$
+          RestApiId: !Ref $name$Api
