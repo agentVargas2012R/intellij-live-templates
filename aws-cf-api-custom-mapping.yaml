@@ -1,0 +1,9 @@
+apiCustomMapping:
+  Type: AWS::ApiGateway::BasePathMapping
+  Properties:
+    BasePath: !Sub "$name$"
+    DomainName: !Sub "$domain$"
+    RestApiId: !Ref $name$Api
+    Stage: !Ref $$
+  DependsOn:
+    - $name$Api

@@ -1,0 +1,42 @@
+$name$Table:
+  Type: AWS::DynamoDB::Table
+  Properties:
+    AttributeDefinitions:
+      -
+        AttributeName: "$pk$"
+        AttributeType: "S"
+      -
+        AttributeName: "$sk$"
+        AttributeType: "S"
+      -
+        AttributeName: "$gsi1$"
+        AttributeType: "S"
+      -
+        AttributeName: "$sk1$"
+        AttributeType: "S"
+
+    KeySchema:
+      -
+        AttributeName: "$pk$"
+        KeyType: "HASH"
+      -
+        AttributeName: "$sk$"
+        KeyType: "RANGE"
+    ProvisionedThroughput:
+      ReadCapacityUnits: "$choice$"
+      WriteCapacityUnits: "$choose$"
+    TableName: "$name$Table"
+    GlobalSecondaryIndexes:
+      - IndexName: "$name$GSI"
+        KeySchema:
+          - AttributeName: "$gsi1$"
+            KeyType: "HASH"
+          - AttributeName: "$sk1$"
+            KeyType: "RANGE"
+        Projection:
+          NonKeyAttributes:
+            - "Album"
+            - "NumberOfSongs"
+          ProjectionType: "$projectType$"
+        ProvisionedThroughput:
+          ReadCapacityUnits: "$choice$"

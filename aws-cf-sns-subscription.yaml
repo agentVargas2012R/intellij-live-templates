@@ -1,0 +1,11 @@
+$name$Subscription:
+  Type: AWS::SNS::Subscription
+  Properties:
+    TopicArn: !Ref $name$SNS
+    Endpoint:
+      !GetAtt $name$Queue.Arn
+    Protocol: sqs
+    RawMessageDelivery: true
+    FilterPolicy:
+      EventType:
+        - intellipoint

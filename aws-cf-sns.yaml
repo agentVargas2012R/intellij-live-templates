@@ -1,0 +1,8 @@
+$name$SNS:
+  Type: AWS::SNS::Topic
+  Properties:
+    TopicName: "$name$SNS"
+    FifoTopic: true
+
+
+              

@@ -1,0 +1,27 @@
+$name$Api:
+  Type: AWS::Serverles::Api
+  Properties:
+    Name: $name$-api
+    EndpointConfiguration: REGIONAL
+    Cors:
+      AllowedHeaders: "$headers$"
+      AllowedOrigin: "*"
+      AllowedMethods: "*"
+    TracingEnabled: true
+    MethodSetting:
+      - DataTraceEnabled: true
+        HttpMethod: "*"
+        LoggingInfo: "INFO"
+        ResourcePath: "/*"
+        MetricEnabled: true
+    DefinitionBody:
+      Fn::Transform:
+        Name: AWS::Include
+        Parameters:
+          Location:
+            Fn::Join:
+              - ''
+              - - 's3://intlpnt-iapps-storage'
+                - '$name$-open-spec.yaml'
+
+

@@ -1,0 +1,25 @@
+$name$QueuePolicy:
+    Type: AWS::SQS::QueuePolicy
+    Properties:
+        - !Ref $name$Queue
+    PolicyDocument:
+        Statement:
+            - Sid: Allow-SNS-SendMessage
+            Effect: "Allow"
+            Principle:
+                Service: sns.amazonaws.com
+            Action:
+                - sqs:SendMessage
+            Resource:
+              !GetAtt $name$.Arn
+            Condition:
+                StringEquals:
+                    "aws:SourceArn": !Ref $name$SNS
+
+$name$Queue:
+    Type: AWS::SQS::Queue
+    Properties:
+        QueueName: $name$Queue
+        ReceiveMessageWaitTimeSeconds: $seconds$
+        VisibilityTimeout: $vTimeout$
+        KmsMasterKeyId: !Ref $name$CMK 
