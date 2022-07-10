@@ -1,0 +1,56 @@
+DemoFuncRole:
+  Type: AWS::IAM::Role
+  Properties:
+    RoleName: !Sub "${AWS::StackName}-role"
+    AssumedRolePolicyDocument:
+      Version: "2012-10-17"
+      Statement:
+        - Effect: Allow
+          Prinicipal:
+            Services:
+              - lambda.amazonaws.com
+            Action:
+              - "sts:AssumeRole"
+      ManagedPolicyArns:
+        - arn:aws:iam:aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Policies:
+        - PolicyName: LogsPolicy
+          PolicyDocument:
+            Statement:
+              - Effect: Allow
+                Action:
+                  - logs:*
+                Resource:
+                  - arn:aws:logs:*:*:*
+        - PolicyName:
+          PolicyDocument:
+            Version: "2012-10-27"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - sqs:*
+                Resource: !Ref ${DemoQueue.Arn}
+        - PolicyName: KMSPolicy
+          PolicyDocument:
+            Version: "2012-10-27"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - kms:Decrypt
+                  - kms:GenerateDataKey
+                Resource: "arn:aws:kms:*:${AWS::AccountId}:key/*"
+        - PolicyName: DBAccessPolicy
+          PolicyDocument:
+            Version: "2012-10-27"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 'dynamodb:GetItem'
+                  - 'dynamodb:Scan'
+                  - 'dynamodb:Query'
+                  - 'dynamodb:BatchGetItem'
+                  - 'dynamodb:BatchWriteItem'
+                Resources:
+                  - !Sub
+                    - arn:${AWS::Partition}:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${tableName}
+                    - { tableName: { Fn::ImportValue: !Join [ "-", !Ref "intllpnt-iapps-${deployEnv}-infra" , tableParam ] } }

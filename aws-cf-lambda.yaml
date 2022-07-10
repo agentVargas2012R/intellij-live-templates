@@ -20,3 +20,4 @@ $name$Func:
           Path: /$eventName$
           Method: $method$
           RestApiId: !Ref $name$Api
+

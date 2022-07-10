@@ -1,0 +1,9 @@
+- PolicyName: KMSPolicy
+  PolicyDocument:
+    Version: "2012-10-27"
+    Statement:
+      - Effect: Allow
+        Action:
+          - kms:Decrypt
+          - kms:GenerateDataKey
+        Resource: "arn:aws:kms:*:${AWS::AccountId}:key/*"
